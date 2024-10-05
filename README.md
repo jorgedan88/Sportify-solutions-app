@@ -1,2 +1,2 @@
 # Sportify-back
-En este repositorio se encuentra el repositorio con el codigo correspondietne al backend de la aplicación Spotify. 
+En este repositorio se encuentra el repositorio con el codigo correspondiente al backend de la aplicación Sportify.
