@@ -8,23 +8,25 @@ using System.Globalization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Sportify.Models
+namespace Sportify_back.Models
 {
-    public class Users
+    public class Licenses
     {
 
+[Column("IdLicenses")]
 public int Id { get; set; }
 
-public int Dni { get; set; }
-
+[Required]
 public string Name { get; set; }
 
-public string Mail { get; set; }
+[Required]
+public string Description { get; set; }
 
-public int Phone { get; set; }
+[Required]
+public List<Profiles> Profiles { get; set; }
 
-public string Address { get; set; }
-
+[Required]
+public bool Active { get; set; }
         
     }
 }

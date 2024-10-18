@@ -1,32 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Guillermo\\Desktop\\ISTEA\\Integracion de Sistemas\\Sportify-back\\Sportify-back.csproj": {}
+    "C:\\Users\\imont\\Sportify-back\\Sportify-back.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Guillermo\\Desktop\\ISTEA\\Integracion de Sistemas\\Sportify-back\\Sportify-back.csproj": {
+    "C:\\Users\\imont\\Sportify-back\\Sportify-back.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Guillermo\\Desktop\\ISTEA\\Integracion de Sistemas\\Sportify-back\\Sportify-back.csproj",
+        "projectUniqueName": "C:\\Users\\imont\\Sportify-back\\Sportify-back.csproj",
         "projectName": "Sportify-back",
-        "projectPath": "C:\\Users\\Guillermo\\Desktop\\ISTEA\\Integracion de Sistemas\\Sportify-back\\Sportify-back.csproj",
-        "packagesPath": "C:\\Users\\Guillermo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Guillermo\\Desktop\\ISTEA\\Integracion de Sistemas\\Sportify-back\\obj\\",
+        "projectPath": "C:\\Users\\imont\\Sportify-back\\Sportify-back.csproj",
+        "packagesPath": "C:\\Users\\imont\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\imont\\Sportify-back\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Guillermo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\imont\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -37,8 +35,24 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.421\\RuntimeIdentifierGraph.json"
         }
       }
     }

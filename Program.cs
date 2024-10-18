@@ -1,7 +1,17 @@
+
+using Sportify_back.Models;
+using Microsoft.EntityFrameworkCore;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<SportifyDbContext>(options=>
+options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnectionString"))
+);
+
 
 var app = builder.Build();
 
