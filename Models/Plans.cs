@@ -13,22 +13,22 @@ namespace Sportify_back.Models
     public class Plans
     {
 
- [Column("IdPlans")]
-public int Id { get; set; }
+        [Column("IdPlans")]
+        public int Id { get; set; }
 
-[Required]
-public string Name { get; set; }
+        [Required]
+        public string Name { get; set; }
 
-[Required]
-public string Description { get; set; }
+        [Required]
+        public string Description { get; set; }
 
-[Required]
-public List<Users> Users { get; set; }
+        [Required]
+        public List<Users> Users { get; set; }
 
-[Required]
-public List<Activities> Activities { get; set; }
+        [Required]
+        public List<Activities> Activities { get; set; }
 
-public bool Active { get; set; }
-
+        public bool Active { get; set; }
+        
     }
 }
