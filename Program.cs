@@ -1,38 +1,60 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Sportify_back.Models; // Ajusta esto al namespace correcto de tu DbContext
+using Sportify_back.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Sportify_back.Identity;
+using Sportify_Back.Areas.Identity.Data;
+using Sportify_Back.Models;
+using Sportify_Back.Services;
+using QuestPDF;
+
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura la cadena de conexión para SQLite
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-                       ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// Agregar explícitamente el archivo appsettings.json
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-// Usa SQLite en lugar de SQL Server
+// Configurar rutas personalizadas para las vistas
+builder.Services.Configure<Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions>(options =>
+{
+    options.ViewLocationFormats.Add("/Interface/Views/{1}/{0}.cshtml");
+    options.ViewLocationFormats.Add("/Interface/Views/Shared/{0}.cshtml");
+});
+
+// Add services to the container.
 builder.Services.AddDbContext<SportifyDbContext>(options =>
-    options.UseSqlite(connectionString));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnectionString")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// Configuración de Identity y Claims personalizada
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+// Configuramos Identity con la fábrica de claims personalizada
+builder.Services.AddDefaultIdentity<ApplicationUser>
+    (options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<SportifyDbContext>()
-    .AddClaimsPrincipalFactory<AdditionalUserClaimsPrincipalFactory>();
+    .AddClaimsPrincipalFactory<AdditionalUserClaimsPrincipalFactory>(); // Agregamos aca la fábrica de claims aquí
 
 builder.Services.AddControllersWithViews();
 
-// Configuración de autorización
+// Configurar la autenticación por cookies (para no generar un controller para el login, que seria otra opcion)
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+    options.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
+    options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+}).AddCookie();
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdministradorOnly", policy =>
-        policy.RequireClaim("Profile", "Administrador"));
+        policy.RequireClaim("Profile", "Administrador")); // Verifica el claim "Profile" para ser "Administrador"
 });
+
+// Configurar servicios personalizados
+builder.Services.AddScoped<IEntityReportService, EntityReportService>(); // Agregamos el Service de Reporteria
 
 var app = builder.Build();
 
-// Configura el pipeline de solicitud HTTP
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -48,12 +70,21 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
+app.UseAuthentication(); // Agregamos la autenticacion
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Welcome}/{id?}");
 app.MapRazorPages();
 
-app.Run();
+try
+{
+    app.Run();
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"An error occurred: {ex.Message}");
+    Console.WriteLine(ex.StackTrace);
+    throw;
+}
